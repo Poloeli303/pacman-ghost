@@ -11,6 +11,8 @@ public:
 	void printInfo();
 	void chase1(int x, int y, int field[28][28]);
 	void chase2(int x, int y, int field[28][28]);
+	void chase3(int x, int y, int field[28][28]);
+	void chase4(int x, int y, int field[28][28]);
 	bool getPacman(int x, int y);
 	int getXpos();
 	int getYpos();
