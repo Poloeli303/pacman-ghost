@@ -22,10 +22,14 @@ int main() {
     sf::Sprite wall;
     wall.setTexture(brick);
 
-    ghost Blinky;
-    Blinky.initGhost(400, 644, 1, 0, 1, sf::Color(200,0,0));
-    ghost victor;
-    victor.initGhost(200, 644, 1, 0, 1, sf::Color(255,100,0));
+    ghost Knuckles;
+    Knuckles.initGhost(400, 644, 1, 0, 1, sf::Color(200,0,0));
+    ghost Tails;
+    Tails.initGhost(200, 644, 1, 0, 1, sf::Color(255,100,0));
+    ghost Luigi;
+    Luigi.initGhost(100, 644, 1, 0, 1, sf::Color(0, 200, 100));
+    ghost LilPurp;
+    LilPurp.initGhost(550, 644, 1, 0, 1, sf::Color(106, 13, 173));
 
     int map[28][28] = {
         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -103,9 +107,17 @@ int main() {
 
         }//end event loop---------------------------------------------------------------
 
+        //warp zone
+        if (xpos < -15 && ypos >= 435 && ypos < 495)
+            xpos = 970;
+        if (xpos > 970 && ypos >= 435 && ypos < 495)
+            xpos = -15;
+        
         //call ghost chaser functions
-        Blinky.chase1(xpos, ypos, map);
-        victor.chase2(xpos, ypos, map);
+        Luigi.chase1(xpos, ypos, map);
+        Knuckles.chase2(xpos, ypos, map);
+        Tails.chase3(xpos, ypos, map);
+        LilPurp.chase4(xpos, ypos, map);
 
          //move Mr. Pac
         if (keys[LEFT] == true)
@@ -126,26 +138,23 @@ int main() {
         //right collision
         if (vx > 0 && map[(ypos) / 36][(xpos + radius * 2 + 5) / 36] == 1) {
             vx = 0;
-            cout << "right collision ";
         }
         //left collision
         if (vx < 0 && map[(ypos) / 36][(xpos - 5) / 36] == 1) {
             vx = 0;
-            cout << "left collision ";
         }
         //down collision
         if (vy > 0 && map[(ypos + radius * 2 + 5) / 36][(xpos) / 36] == 1) {
             vy = 0;
-            cout << "down collision ";
         }
         //up collision
         if (vy < 0 && map[(ypos - 5) / 36][(xpos) / 36] == 1) {
             vy = 0;
-            cout << "up collision ";
         }
 
         if (map[(ypos) / 36][(xpos) / 36] == 0)
             map[(ypos) / 36][(xpos) / 36] = 2;
+        cout << xpos << " , " << ypos << endl;
 
         //update player position
         xpos += vx;
@@ -165,10 +174,13 @@ int main() {
                 if (map[rows][cols] == 0) {
                     dot.setPosition(cols * 36 + 18, rows * 36 + 18);
                     screen.draw(dot);
+
                 }
             }
-        Blinky.drawGhost(screen);
-        victor.drawGhost(screen);
+        Luigi.drawGhost(screen);
+        Knuckles.drawGhost(screen);
+        Tails.drawGhost(screen);
+        LilPurp.drawGhost(screen);
         screen.draw(player); //draw player
         screen.display(); //flips memory drawings onto screen
 
